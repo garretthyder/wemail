@@ -100,23 +100,27 @@
                                     ></component>
 
                                     <div v-if="!isPreview" class="control-buttons">
-                                        <p>
-                                            <i class="fa fa-arrows move"></i>
+                                        <p v-if="!content.disable">
+                                            <i class="fa fa-arrows move"
+                                                :class="{ 'disabled': content.activeOnly !== undefined && !content.activeOnly.includes('move') }"
+                                            ></i>
                                             <i
                                                 :class="['fa fa-arrow-up move-up', (sectionIndex === 0 && contentIndex === 0) ? 'disabled': '']"
                                                 :data-content-type="content.type"
                                                 :data-section-index="sectionIndex"
                                                 :data-content-index="contentIndex"
+                                                v-if="content.type !== 'footer'"
                                             ></i>
                                             <i
                                                 :class="['fa fa-arrow-down move-down', ((sectionIndex === template.sections.length - 1) && (contentIndex === section.contents.length - 1)) ? 'disabled' : '']"
                                                 :data-content-type="content.type"
                                                 :data-section-index="sectionIndex"
                                                 :data-content-index="contentIndex"
+                                                v-if="content.type !== 'footer'"
                                             ></i>
-                                            <i class="fa fa-pencil" @click="editContent(sectionIndex, contentIndex)"></i>
-                                            <i class="fa fa-clone" @click="cloneContent(sectionIndex, contentIndex)"></i>
-                                            <i class="fa fa-trash-o" @click="deleteContent(sectionIndex, contentIndex)"></i>
+                                            <i class="fa fa-pencil" @click="editContent(sectionIndex, contentIndex)" :class="{ 'disabled': content.activeOnly !== undefined && !content.activeOnly.includes('edit') }"></i>
+                                            <i class="fa fa-clone" @click="cloneContent(sectionIndex, contentIndex)" :class="{ 'disabled': content.activeOnly !== undefined && !content.activeOnly.includes('clone') }"></i>
+                                            <i class="fa fa-trash-o" @click="deleteContent(sectionIndex, contentIndex)" :class="{ 'disabled': content.activeOnly !== undefined && !content.activeOnly.includes('delete') }"></i>
                                         </p>
                                     </div>
                                 </td>
